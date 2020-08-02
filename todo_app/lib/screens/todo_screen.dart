@@ -10,6 +10,10 @@ class TodoScreen extends StatelessWidget {
         title: Text("Todo list"),
       ),
       body: TodoList(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => {Navigator.pushNamed(context, "/entry")},
+      ),
     );
   }
 }
@@ -18,15 +22,14 @@ class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<TodoModel>(
-        builder: (context, todoList, child) =>
-            ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: todoList.todos.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 50,
-                    child: Center(child: Text(todoList.todos[index].title)),
-                  );
-                }));
+        builder: (context, todoList, child) => ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: todoList.todos.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                height: 50,
+                child: Center(child: Text(todoList.todos[index].title)),
+              );
+            }));
   }
 }

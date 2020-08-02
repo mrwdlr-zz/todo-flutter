@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/screens/todo_form.dart';
 import 'package:todo_app/screens/todo_screen.dart';
 import 'package:todo_app/state/todo_model.dart';
 
@@ -20,6 +21,7 @@ class TodoListApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => TodoScreen(),
+        '/entry': (context) => TodoForm(),
       },
     );
   }
