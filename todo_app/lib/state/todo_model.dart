@@ -17,9 +17,9 @@ class TodoModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setDone(int id) {
+  void toggleDone(int id) {
     var index = _todos.indexWhere((element) => element.id == id);
-    _todos[index].isDone = true;
+    _todos[index].isDone = !_todos[index].isDone;
     notifyListeners();
   }
 

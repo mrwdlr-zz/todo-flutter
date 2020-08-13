@@ -28,7 +28,16 @@ class TodoList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 height: 50,
-                child: Center(child: Text(todoModel.todos[index].title)),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(todoModel.todos[index].title),
+                      Checkbox(
+                        value: todoModel.todos[index].isDone,
+                        onChanged: (bool newValue) =>
+                            {todoModel.toggleDone(todoModel.todos[index].id)},
+                      )
+                    ]),
               );
             }));
   }
