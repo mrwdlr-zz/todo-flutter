@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/model/todo.dart';
+import 'package:todo_app/state/todo_model.dart';
 
 class TodoEntryScreen extends StatelessWidget {
   @override
@@ -25,6 +27,10 @@ class TodoFormState extends State<TodoForm> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
 
+  final TodoModel todoModel;
+
+  TodoFormState({this.todoModel});
+
   @override
   void dispose() {
     titleController.dispose();
@@ -32,28 +38,31 @@ class TodoFormState extends State<TodoForm> {
     super.dispose();
   }
 
-  void createTodo() {
+  void createTodo(addTodo) {
     var todo = new Todo(
-        id: 3,
         title: titleController.text,
-        description: descriptionController.text);
+        description: descriptionController.text
+    );
+    addTodo(todo);
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
-        child: Column(children: <Widget>[
-          TextFormField(
-            controller: titleController,
-          ),
-          TextFormField(
-            controller: descriptionController,
-          ),
-          RaisedButton(
-            child: Text("Save"),
-            onPressed: () => {},
-          )
-        ]));
+        child: Consumer<TodoModel>(
+            builder: (context, todoModel, child) => Column(children: <Widget>[
+                  TextFormField(
+                    controller: titleController,
+                  ),
+                  TextFormField(
+                    controller: descriptionController,
+                  ),
+                  RaisedButton(
+                    child: Text("Save"),
+                    onPressed: () => {createTodo(todoModel.add)},
+                  )
+                ])));
   }
 }

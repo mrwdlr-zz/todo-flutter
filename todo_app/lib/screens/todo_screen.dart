@@ -22,13 +22,13 @@ class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<TodoModel>(
-        builder: (context, todoList, child) => ListView.builder(
+        builder: (context, todoModel, child) => ListView.builder(
             padding: const EdgeInsets.all(8),
-            itemCount: todoList.todos.length,
+            itemCount: todoModel.todos.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 height: 50,
-                child: Center(child: Text(todoList.todos[index].title)),
+                child: Center(child: Text(todoModel.todos[index].title)),
               );
             }));
   }
