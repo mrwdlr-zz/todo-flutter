@@ -12,6 +12,7 @@ class TodoModel extends ChangeNotifier {
   UnmodifiableListView<Todo> get todos => UnmodifiableListView(_todos);
 
   void add(Todo todo) {
+    todo.id = todos.last.id + 1;
     _todos.add(todo);
     notifyListeners();
   }

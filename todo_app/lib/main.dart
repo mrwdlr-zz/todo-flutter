@@ -21,7 +21,7 @@ class TodoListApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => TodoScreen(),
-        '/entry': (context) => TodoForm(),
+        '/entry': (context) => TodoEntryScreen(),
       },
     );
   }
