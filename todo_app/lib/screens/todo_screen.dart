@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/screens/todo_form.dart';
 import 'package:todo_app/state/todo_model.dart';
 
 class TodoScreen extends StatelessWidget {
@@ -31,11 +32,19 @@ class TodoList extends StatelessWidget {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(todoModel.todos[index].title),
                       Checkbox(
                         value: todoModel.todos[index].isDone,
                         onChanged: (bool newValue) =>
-                            {todoModel.toggleDone(todoModel.todos[index].id)},
+                        {todoModel.toggleDone(todoModel.todos[index].id)},
+                      ),
+                      Text(todoModel.todos[index].title),
+                      IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () => {
+                          Navigator.pushNamed(context, "/entry",
+                              arguments:
+                                  ScreenArguments(todoModel.todos[index].id))
+                        },
                       )
                     ]),
               );

@@ -3,6 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/model/todo.dart';
 import 'package:todo_app/state/todo_model.dart';
 
+class ScreenArguments {
+  final int todoId;
+
+  ScreenArguments(this.todoId);
+}
+
 class TodoEntryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
