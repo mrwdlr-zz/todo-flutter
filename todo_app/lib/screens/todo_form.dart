@@ -32,6 +32,7 @@ class TodoFormState extends State<TodoForm> {
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  bool isEditForm = false;
 
   final TodoModel todoModel;
 
@@ -46,15 +47,25 @@ class TodoFormState extends State<TodoForm> {
 
   void createTodo(addTodo) {
     var todo = new Todo(
-        title: titleController.text,
-        description: descriptionController.text
-    );
+        title: titleController.text, description: descriptionController.text);
     addTodo(todo);
     Navigator.pop(context);
   }
 
+  void loadTodoForEdit(BuildContext context){
+    final ScreenArguments arguments = ModalRoute.of(context).settings.arguments;
+    if(arguments.todoId != null){
+      isEditForm = true;
+
+      var todo = new TodoModel().read(arguments.todoId);
+      titleController.text = todo.title;
+      descriptionController.text = todo.description;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    loadTodoForEdit(context);
     return Form(
         key: _formKey,
         child: Consumer<TodoModel>(
