@@ -17,6 +17,18 @@ class TodoModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void update(int id, String newTitle, String newDescription) {
+    var todo = _todos.firstWhere((todo) => todo.id == id);
+    todo.title = newTitle;
+    todo.description = newDescription;
+    notifyListeners();
+  }
+
+  void delete(int id){
+    _todos.removeWhere((todo) => todo.id == id);
+    notifyListeners();
+  }
+
   Todo read(int id){
     return _todos.firstWhere((element) => element.id == id);
   }

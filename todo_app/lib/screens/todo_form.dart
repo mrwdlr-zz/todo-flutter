@@ -33,6 +33,7 @@ class TodoFormState extends State<TodoForm> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   bool isEditForm = false;
+  var editableTodo;
 
   final TodoModel todoModel;
 
@@ -45,21 +46,31 @@ class TodoFormState extends State<TodoForm> {
     super.dispose();
   }
 
-  void createTodo(addTodo) {
+  void createTodo(Function addTodo) {
     var todo = new Todo(
         title: titleController.text, description: descriptionController.text);
     addTodo(todo);
     Navigator.pop(context);
   }
 
-  void loadTodoForEdit(BuildContext context){
+  void editTodo(Function editTodo) {
+    editTodo(editableTodo.id, titleController.text, descriptionController.text);
+    Navigator.pop(context);
+  }
+
+  void deleteTodo(Function deleteTodo) {
+    deleteTodo(editableTodo.id);
+    Navigator.pop(context);
+  }
+
+  void loadTodoForEdit(BuildContext context) {
     final ScreenArguments arguments = ModalRoute.of(context).settings.arguments;
-    if(arguments.todoId != null){
+    if (arguments != null && arguments.todoId != null) {
       isEditForm = true;
 
-      var todo = new TodoModel().read(arguments.todoId);
-      titleController.text = todo.title;
-      descriptionController.text = todo.description;
+      editableTodo = new TodoModel().read(arguments.todoId);
+      titleController.text = editableTodo.title;
+      descriptionController.text = editableTodo.description;
     }
   }
 
@@ -77,9 +88,19 @@ class TodoFormState extends State<TodoForm> {
                     controller: descriptionController,
                   ),
                   RaisedButton(
-                    child: Text("Save"),
-                    onPressed: () => {createTodo(todoModel.add)},
-                  )
+                    child: Text(isEditForm ? "Update" : "Save"),
+                    onPressed: () => {
+                      isEditForm
+                          ? editTodo(todoModel.update)
+                          : createTodo(todoModel.add)
+                    },
+                  ),
+                  isEditForm
+                      ? RaisedButton(
+                          child: Text("Delete"),
+                          onPressed: () => deleteTodo(todoModel.delete),
+                        )
+                      : new Container()
                 ])));
   }
 }
